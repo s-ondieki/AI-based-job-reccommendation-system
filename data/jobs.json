@@ -1,0 +1,752 @@
+[
+  {
+    "title": "Junior Full Stack Developer",
+    "company": "Tech Solutions Ltd",
+    "location": "Nairobi, Kenya",
+    "employmentType": "Full-time",
+    "industry": "Software Engineering",
+    "salaryRange": "$1,200 - $1,800 / month",
+    "description": "We are seeking a motivated Junior Full Stack Developer to assist in building modern web applications using React and Node.js REST APIs.",
+    "responsibilities": [
+      "Develop responsive user interfaces using React and Tailwind CSS",
+      "Build scalable REST APIs using Node.js and Express",
+      "Collaborate with database administrators to design MongoDB schemas",
+      "Participate in daily agile standups and code reviews"
+    ],
+    "qualifications": [
+      "BSc in Information Technology, Computer Science, or related field",
+      "Strong understanding of JavaScript (ES6+), HTML5, and CSS3",
+      "Familiarity with Git version control and RESTful web services"
+    ],
+    "requiredSkills": ["JavaScript", "React", "Node.js", "MongoDB", "Git"],
+    "preferredSkills": ["TypeScript", "Docker", "REST API"],
+    "educationRequirements": "BSc Information Technology or Computer Science",
+    "experienceRequired": 1,
+    "status": "Active"
+  },
+  {
+    "title": "Data Analyst",
+    "company": "Africa Data Labs",
+    "location": "Nairobi, Kenya",
+    "employmentType": "Full-time",
+    "industry": "Data Science & Analytics",
+    "salaryRange": "$1,500 - $2,200 / month",
+    "description": "Africa Data Labs is looking for a detail-oriented Data Analyst to extract business insights, transform raw data, and create interactive Power BI dashboards.",
+    "responsibilities": [
+      "Clean, process, and analyze structured data using Python and Pandas",
+      "Write complex SQL queries to retrieve transactional datasets",
+      "Build interactive reports and dashboards in Power BI or Tableau",
+      "Present data-driven recommendations to management"
+    ],
+    "qualifications": [
+      "Degree in Statistics, Information Technology, or Business Analytics",
+      "Proficiency in Python, SQL, and data visualization tools",
+      "Solid understanding of statistical analysis and data cleaning"
+    ],
+    "requiredSkills": ["Python", "SQL", "Pandas", "Power BI", "Data & Analytics"],
+    "preferredSkills": ["Tableau", "NumPy", "Scikit-Learn"],
+    "educationRequirements": "BSc Information Technology, Statistics, or Data Science",
+    "experienceRequired": 2,
+    "status": "Active"
+  },
+  {
+    "title": "Network & Systems Administrator",
+    "company": "Enterprise IT Solutions",
+    "location": "Mombasa, Kenya",
+    "employmentType": "Full-time",
+    "industry": "IT Infrastructure & Networking",
+    "salaryRange": "$1,400 - $2,000 / month",
+    "description": "Responsible for managing enterprise local area networks (LAN/WAN), configuring Cisco routers/switches, and maintaining Linux/Windows server environments.",
+    "responsibilities": [
+      "Configure and maintain Cisco routers, switches, and firewalls",
+      "Monitor network traffic, bandwidth utilization, and security logs",
+      "Administer Linux and Windows Server domain environments",
+      "Provide Tier 2 technical support for network infrastructure"
+    ],
+    "qualifications": [
+      "BSc in Information Technology or Computer Networks",
+      "CCNA certification required",
+      "Experience with Linux server administration and bash scripting"
+    ],
+    "requiredSkills": ["Network Administration", "CCNA", "Linux", "System Administration", "Problem Solving"],
+    "preferredSkills": ["CompTIA Security+", "Amazon Web Services"],
+    "educationRequirements": "BSc Information Technology or Computer Networking",
+    "experienceRequired": 2,
+    "status": "Active"
+  },
+  {
+    "title": "Junior Cybersecurity Analyst",
+    "company": "Apex Cyber Analytics",
+    "location": "Nairobi, Kenya (Hybrid)",
+    "employmentType": "Full-time",
+    "industry": "Cybersecurity",
+    "salaryRange": "$1,600 - $2,300 / month",
+    "description": "Join our Security Operations Center (SOC) to monitor threats, analyze security incidents, and conduct vulnerability assessments across enterprise client assets.",
+    "responsibilities": [
+      "Monitor SIEM tools for suspicious activities and security alerts",
+      "Perform vulnerability scans and assist in penetration testing",
+      "Document incident response procedures and remediation steps",
+      "Conduct security awareness training for internal teams"
+    ],
+    "qualifications": [
+      "BSc in Cybersecurity, Information Security, or Information Technology",
+      "CompTIA Security+ or CEH certification is a strong advantage",
+      "Knowledge of TCP/IP networking, Linux, and web security"
+    ],
+    "requiredSkills": ["Cybersecurity", "CompTIA Security+", "Linux", "Penetration Testing", "Communication"],
+    "preferredSkills": ["Python", "Network Administration"],
+    "educationRequirements": "BSc Cybersecurity or Information Technology",
+    "experienceRequired": 1,
+    "status": "Active"
+  },
+  {
+    "title": "Backend Python / Django Engineer",
+    "company": "Innovate Technologies",
+    "location": "Remote",
+    "employmentType": "Full-time",
+    "industry": "Software Engineering",
+    "salaryRange": "$2,000 - $3,000 / month",
+    "description": "We are looking for a mid-level Python backend developer to build robust microservices and database APIs using Django and PostgreSQL.",
+    "responsibilities": [
+      "Design and implement high-performance REST APIs in Django/Flask",
+      "Optimize complex PostgreSQL database schema queries and indexes",
+      "Integrate Redis caching to improve web response times",
+      "Write unit tests and maintain CI/CD pipelines"
+    ],
+    "qualifications": [
+      "BSc in Computer Science, IT, or Software Engineering",
+      "3+ years of Python web development experience",
+      "Strong skills in PostgreSQL, Docker, and Git"
+    ],
+    "requiredSkills": ["Python", "Django", "PostgreSQL", "REST API", "Docker"],
+    "preferredSkills": ["Redis", "Kubernetes", "CI/CD"],
+    "educationRequirements": "BSc Computer Science or Software Engineering",
+    "experienceRequired": 3,
+    "status": "Active"
+  },
+  {
+    "title": "Cloud Support Associate",
+    "company": "CloudNet Global",
+    "location": "Nairobi, Kenya",
+    "employmentType": "Full-time",
+    "industry": "Cloud Computing",
+    "salaryRange": "$1,300 - $1,900 / month",
+    "description": "Assist client enterprise workloads on Amazon Web Services (AWS) and Microsoft Azure. Manage EC2 instances, S3 storage, and cloud monitoring.",
+    "responsibilities": [
+      "Deploy and manage AWS infrastructure services (EC2, S3, RDS)",
+      "Troubleshoot client cloud connectivity and security group rules",
+      "Automate repetitive cloud maintenance tasks using Bash and Python",
+      "Monitor system health using AWS CloudWatch"
+    ],
+    "qualifications": [
+      "BSc in Information Technology or Computer Engineering",
+      "AWS Certified Cloud Practitioner or Solutions Architect Associate",
+      "Good understanding of Linux administration and networking"
+    ],
+    "requiredSkills": ["Amazon Web Services", "Linux", "Python", "Network Administration", "Problem Solving"],
+    "preferredSkills": ["Microsoft Azure", "Docker", "Terraform"],
+    "educationRequirements": "BSc Information Technology",
+    "experienceRequired": 1,
+    "status": "Active"
+  },
+  {
+    "title": "Machine Learning Intern",
+    "company": "DataPulse Systems",
+    "location": "Nairobi, Kenya",
+    "employmentType": "Internship",
+    "industry": "Artificial Intelligence",
+    "salaryRange": "$800 - $1,100 / month",
+    "description": "An exciting opportunity for recent graduates to gain hands-on experience in building predictive models, NLP text classifiers, and recommendation algorithms.",
+    "responsibilities": [
+      "Assist in cleaning and preprocessing structured and unstructured datasets",
+      "Train baseline machine learning models using Scikit-Learn and Pandas",
+      "Evaluate model performance metrics (Accuracy, Precision, Recall)",
+      "Document experimental setups and model evaluation findings"
+    ],
+    "qualifications": [
+      "Final year student or recent graduate in BSc IT, Computer Science, or Data Science",
+      "Proficiency in Python programming and math/statistics concepts",
+      "Familiarity with Pandas, NumPy, and Scikit-Learn"
+    ],
+    "requiredSkills": ["Python", "Machine Learning", "Pandas", "NumPy", "Scikit-Learn"],
+    "preferredSkills": ["Natural Language Processing", "TensorFlow", "Git"],
+    "educationRequirements": "BSc Information Technology, Computer Science, or Data Science",
+    "experienceRequired": 0,
+    "status": "Active"
+  },
+  {
+    "title": "Frontend React Engineer",
+    "company": "Digital Systems Kenya",
+    "location": "Nairobi, Kenya",
+    "employmentType": "Full-time",
+    "industry": "Frontend Web Development",
+    "salaryRange": "$1,600 - $2,400 / month",
+    "description": "Digital Systems Kenya is looking for a frontend specialist proficient in React, modern JavaScript, and component UI architecture to create seamless web applications.",
+    "responsibilities": [
+      "Convert Figma wireframes into pixel-perfect React components",
+      "Manage client-side application state using React Context / Redux",
+      "Optimize web assets for maximum speed and mobile responsiveness",
+      "Integrate RESTful backend endpoints using Axios"
+    ],
+    "qualifications": [
+      "Degree in Information Technology, Software Engineering, or related",
+      "2+ years building production applications with React.js",
+      "Strong mastery of HTML5, CSS3, Tailwind CSS, and JavaScript"
+    ],
+    "requiredSkills": ["JavaScript", "React", "HTML", "CSS", "TypeScript"],
+    "preferredSkills": ["Tailwind CSS", "REST API", "Git"],
+    "educationRequirements": "BSc Information Technology or Software Engineering",
+    "experienceRequired": 2,
+    "status": "Active"
+  },
+  {
+    "title": "Database Administrator (DBA)",
+    "company": "Enterprise IT Solutions",
+    "location": "Nairobi, Kenya",
+    "employmentType": "Full-time",
+    "industry": "Database Management",
+    "salaryRange": "$1,800 - $2,600 / month",
+    "description": "Manage enterprise relational and NoSQL databases, ensure high availability, design backup routines, and optimize slow database queries.",
+    "responsibilities": [
+      "Maintain PostgreSQL, MySQL, and MongoDB production instances",
+      "Implement automated database backup, recovery, and replication",
+      "Tune SQL queries, indexes, and database execution plans",
+      "Ensure database security, access controls, and data encryption"
+    ],
+    "qualifications": [
+      "BSc in Information Technology or Computer Science",
+      "3+ years experience as a Database Administrator",
+      "Deep expertise in SQL, PostgreSQL, MongoDB, and Linux"
+    ],
+    "requiredSkills": ["SQL", "PostgreSQL", "MongoDB", "MySQL", "Linux"],
+    "preferredSkills": ["Redis", "Python", "System Administration"],
+    "educationRequirements": "BSc Information Technology or Computer Science",
+    "experienceRequired": 3,
+    "status": "Active"
+  },
+  {
+    "title": "DevOps Engineer",
+    "company": "NextGen Software Inc",
+    "location": "Remote",
+    "employmentType": "Full-time",
+    "industry": "DevOps & Infrastructure",
+    "salaryRange": "$2,500 - $3,800 / month",
+    "description": "Automate software delivery pipelines, manage Kubernetes cloud infrastructure, and foster a culture of continuous deployment.",
+    "responsibilities": [
+      "Build and maintain CI/CD pipelines using GitHub Actions & Jenkins",
+      "Orchestrate microservices using Docker containers and Kubernetes",
+      "Provision AWS cloud infrastructure using Terraform and Ansible",
+      "Implement system monitoring and alerting via Prometheus & Grafana"
+    ],
+    "qualifications": [
+      "BSc in Information Technology, Computer Science, or Engineering",
+      "Strong experience with Docker, Kubernetes, AWS, and CI/CD",
+      "Proficiency in shell scripting (Bash) and Python"
+    ],
+    "requiredSkills": ["Docker", "Kubernetes", "Amazon Web Services", "CI/CD", "Linux"],
+    "preferredSkills": ["Python", "Git", "System Administration"],
+    "educationRequirements": "BSc Computer Science or Information Technology",
+    "experienceRequired": 3,
+    "status": "Active"
+  },
+  {
+    "title": "IT Support Specialist",
+    "company": "Tech Solutions Ltd",
+    "location": "Nairobi, Kenya",
+    "employmentType": "Full-time",
+    "industry": "IT Support & Services",
+    "salaryRange": "$900 - $1,400 / month",
+    "description": "Provide user technical support, hardware setup, software installation, and active directory account management for 200+ internal staff.",
+    "responsibilities": [
+      "Troubleshoot Windows/Mac hardware, printer, and software issues",
+      "Manage employee accounts in Active Directory and Office 365",
+      "Install OS patches, security updates, and antivirus software",
+      "Log support tickets and maintain accurate IT asset inventory"
+    ],
+    "qualifications": [
+      "Diploma or BSc in Information Technology or Computer Fundamentals",
+      "Knowledge of Active Directory, Windows 10/11, and network troubleshooting",
+      "Excellent customer service and communication skills"
+    ],
+    "requiredSkills": ["System Administration", "Communication", "Problem Solving", "Teamwork", "Linux"],
+    "preferredSkills": ["Network Administration", "CCNA"],
+    "educationRequirements": "Diploma or BSc in Information Technology",
+    "experienceRequired": 1,
+    "status": "Active"
+  },
+  {
+    "title": "Mobile App Developer (React Native / Flutter)",
+    "company": "Innovate Technologies",
+    "location": "Nairobi, Kenya",
+    "employmentType": "Full-time",
+    "industry": "Mobile Development",
+    "salaryRange": "$1,700 - $2,500 / month",
+    "description": "Develop high-quality cross-platform mobile applications for iOS and Android devices, integrating RESTful backend microservices.",
+    "responsibilities": [
+      "Build cross-platform mobile app components in React Native / TypeScript",
+      "Integrate third-party REST APIs and push notification services",
+      "Publish and maintain apps on Apple App Store and Google Play Store",
+      "Collaborate with UI/UX designers to refine app interfaces"
+    ],
+    "qualifications": [
+      "BSc in Information Technology or Computer Science",
+      "2+ years experience in mobile app development",
+      "Mastery of JavaScript, React Native, and mobile API integration"
+    ],
+    "requiredSkills": ["JavaScript", "TypeScript", "React", "REST API", "Git"],
+    "preferredSkills": ["Node.js", "Problem Solving"],
+    "educationRequirements": "BSc Information Technology or Computer Science",
+    "experienceRequired": 2,
+    "status": "Active"
+  },
+  {
+    "title": "Junior Business Intelligence Analyst",
+    "company": "Africa Data Labs",
+    "location": "Nairobi, Kenya",
+    "employmentType": "Full-time",
+    "industry": "Data & Analytics",
+    "salaryRange": "$1,300 - $1,800 / month",
+    "description": "Transform data into actionable business stories. Create automated executive dashboards, aggregate database metrics, and assist decision makers.",
+    "responsibilities": [
+      "Gather data requirements from key business stakeholders",
+      "Design interactive dashboards in Power BI and Tableau",
+      "Perform SQL data extractions and routine data validation checks",
+      "Document KPI metrics definitions and reporting workflows"
+    ],
+    "qualifications": [
+      "BSc in Information Technology, Business Information Systems, or Statistics",
+      "Hands-on experience with Power BI, SQL, and Excel",
+      "Strong analytical and communication skills"
+    ],
+    "requiredSkills": ["Power BI", "SQL", "Tableau", "Communication", "Data & Analytics"],
+    "preferredSkills": ["Python", "Pandas"],
+    "educationRequirements": "BSc Information Technology or Business Systems",
+    "experienceRequired": 1,
+    "status": "Active"
+  },
+  {
+    "title": "Software Quality Assurance (QA) Engineer",
+    "company": "Digital Systems Kenya",
+    "location": "Nairobi, Kenya",
+    "employmentType": "Full-time",
+    "industry": "Software Testing & QA",
+    "salaryRange": "$1,400 - $2,000 / month",
+    "description": "Design manual and automated test suites for web applications, identify bug regressions, and verify software deliverables prior to release.",
+    "responsibilities": [
+      "Write test plans, test cases, and bug reports",
+      "Perform manual functional, regression, and API endpoint testing",
+      "Develop automated test scripts using Selenium or Cypress",
+      "Collaborate with software developers in an agile environment"
+    ],
+    "qualifications": [
+      "BSc in Information Technology, Computer Science, or related field",
+      "1+ years experience in software testing and quality assurance",
+      "Familiarity with REST APIs, Git, and automated testing tools"
+    ],
+    "requiredSkills": ["REST API", "Git", "Agile / Scrum", "Problem Solving", "Communication"],
+    "preferredSkills": ["JavaScript", "Python"],
+    "educationRequirements": "BSc Information Technology or Computer Science",
+    "experienceRequired": 1,
+    "status": "Active"
+  },
+  {
+    "title": "NLP / AI Research Engineer",
+    "company": "DataPulse Systems",
+    "location": "Nairobi, Kenya (Hybrid)",
+    "employmentType": "Full-time",
+    "industry": "Artificial Intelligence",
+    "salaryRange": "$2,200 - $3,200 / month",
+    "description": "Build state-of-the-art Natural Language Processing models for text classification, sentiment analysis, entity recognition, and semantic similarity search.",
+    "responsibilities": [
+      "Develop custom NLP algorithms and vector search indexers using Python",
+      "Train transformer models using PyTorch / TensorFlow and HuggingFace",
+      "Build deployment wrapper services using FastAPI and Docker",
+      "Conduct model evaluation benchmarks and hyperparameter tuning"
+    ],
+    "qualifications": [
+      "BSc or MSc in Computer Science, Artificial Intelligence, or Data Science",
+      "Strong background in Machine Learning, Deep Learning, and NLP",
+      "Proficiency in Python, Scikit-Learn, Pandas, and PyTorch/TensorFlow"
+    ],
+    "requiredSkills": ["Python", "Natural Language Processing", "Machine Learning", "Scikit-Learn", "Pandas"],
+    "preferredSkills": ["Deep Learning", "TensorFlow", "Docker", "REST API"],
+    "educationRequirements": "BSc/MSc Computer Science, Data Science, or AI",
+    "experienceRequired": 2,
+    "status": "Active"
+  },
+  {
+    "title": "Senior Systems Engineer",
+    "company": "Enterprise IT Solutions",
+    "location": "Nairobi, Kenya",
+    "employmentType": "Full-time",
+    "industry": "IT Infrastructure",
+    "salaryRange": "$2,200 - $3,000 / month",
+    "description": "Lead the architecture and maintenance of corporate server clusters, enterprise storage, virtualization platforms, and disaster recovery strategies.",
+    "responsibilities": [
+      "Manage VMware ESXi virtualization and Linux/Windows server clusters",
+      "Implement system backup routines, failover testing, and security hardening",
+      "Automate server deployment using Ansible scripts and PowerShell/Bash",
+      "Supervise IT infrastructure team members"
+    ],
+    "qualifications": [
+      "BSc in Information Technology or Computer Engineering",
+      "4+ years experience in systems engineering and virtualization",
+      "Deep expertise in Linux, System Administration, and Networking"
+    ],
+    "requiredSkills": ["System Administration", "Linux", "Network Administration", "Problem Solving", "Agile / Scrum"],
+    "preferredSkills": ["Amazon Web Services", "Docker"],
+    "educationRequirements": "BSc Information Technology or Computer Engineering",
+    "experienceRequired": 4,
+    "status": "Active"
+  },
+  {
+    "title": "Junior Python Web Developer",
+    "company": "Tech Solutions Ltd",
+    "location": "Nairobi, Kenya",
+    "employmentType": "Full-time",
+    "industry": "Software Engineering",
+    "salaryRange": "$1,100 - $1,600 / month",
+    "description": "Entry-level developer role focused on building backend services using Python microframeworks (Flask/FastAPI) and SQL databases.",
+    "responsibilities": [
+      "Develop REST APIs using Python and Flask / FastAPI",
+      "Integrate SQL databases (PostgreSQL/MySQL) with ORM models",
+      "Write unit tests and collaborate with frontend developers",
+      "Maintain project documentation and code repositories"
+    ],
+    "qualifications": [
+      "BSc in Information Technology or Computer Science",
+      "Solid knowledge of Python, SQL, and HTTP REST principles",
+      "Familiarity with Git and basic Linux commands"
+    ],
+    "requiredSkills": ["Python", "Flask", "SQL", "REST API", "Git"],
+    "preferredSkills": ["PostgreSQL", "Docker"],
+    "educationRequirements": "BSc Information Technology or Computer Science",
+    "experienceRequired": 1,
+    "status": "Active"
+  },
+  {
+    "title": "Information Security Officer",
+    "company": "Apex Cyber Analytics",
+    "location": "Nairobi, Kenya",
+    "employmentType": "Full-time",
+    "industry": "Cybersecurity",
+    "salaryRange": "$2,000 - $2,800 / month",
+    "description": "Enforce enterprise cybersecurity policies, compliance auditing (ISO 27001 / GDPR), risk mitigation, and security control monitoring.",
+    "responsibilities": [
+      "Conduct internal cybersecurity audits and vulnerability assessments",
+      "Enforce identity and access management (IAM) security policies",
+      "Lead incident response teams during security breaches",
+      "Manage firewall configurations and endpoint protection"
+    ],
+    "qualifications": [
+      "BSc in Cybersecurity, Information Technology, or Computer Science",
+      "3+ years experience in IT security compliance and auditing",
+      "Security certifications such as CompTIA Security+ or CISSP"
+    ],
+    "requiredSkills": ["Cybersecurity", "CompTIA Security+", "System Administration", "Communication", "Problem Solving"],
+    "preferredSkills": ["Penetration Testing", "Linux"],
+    "educationRequirements": "BSc Cybersecurity or Information Technology",
+    "experienceRequired": 3,
+    "status": "Active"
+  },
+  {
+    "title": "UI/UX & Web Designer",
+    "company": "Digital Systems Kenya",
+    "location": "Nairobi, Kenya",
+    "employmentType": "Full-time",
+    "industry": "Web Design & UI/UX",
+    "salaryRange": "$1,200 - $1,800 / month",
+    "description": "Design user-centered web and mobile interfaces, conduct user research, produce wireframes/prototypes, and translate them into responsive HTML/CSS code.",
+    "responsibilities": [
+      "Create high-fidelity interactive prototypes in Figma or Adobe XD",
+      "Conduct user research and usability testing sessions",
+      "Develop responsive frontend layouts using HTML, CSS, and Tailwind CSS",
+      "Ensure web interfaces comply with accessibility standards"
+    ],
+    "qualifications": [
+      "Degree or Diploma in IT, Software Engineering, or Multimedia Design",
+      "Strong portfolio demonstrating UI/UX design process and web mockups",
+      "Hands-on proficiency with HTML5, CSS3, and JavaScript basics"
+    ],
+    "requiredSkills": ["HTML", "CSS", "JavaScript", "Communication", "Teamwork"],
+    "preferredSkills": ["React", "Tailwind CSS"],
+    "educationRequirements": "BSc/Diploma Information Technology or Design",
+    "experienceRequired": 1,
+    "status": "Active"
+  },
+  {
+    "title": "Cloud Solutions Architect",
+    "company": "CloudNet Global",
+    "location": "Nairobi, Kenya",
+    "employmentType": "Full-time",
+    "industry": "Cloud Computing",
+    "salaryRange": "$3,000 - $4,500 / month",
+    "description": "Senior technical role responsible for designing enterprise cloud architectures on AWS/Azure, multi-tenant cloud migration, and security governance.",
+    "responsibilities": [
+      "Architect cloud infrastructures on AWS/Azure for enterprise clients",
+      "Formulate cloud migration roadmaps and disaster recovery plans",
+      "Manage cloud cost optimizations and infrastructure security controls",
+      "Guide DevOps teams on Terraform automation and Kubernetes clusters"
+    ],
+    "qualifications": [
+      "BSc in Computer Science, IT, or Computer Engineering",
+      "AWS Certified Solutions Architect (Professional level preferred)",
+      "5+ years cloud architecture experience with AWS/Azure, Docker, and K8s"
+    ],
+    "requiredSkills": ["Amazon Web Services", "Microsoft Azure", "Docker", "Kubernetes", "Linux"],
+    "preferredSkills": ["CI/CD", "Python", "System Administration"],
+    "educationRequirements": "BSc Computer Science or Information Technology",
+    "experienceRequired": 5,
+    "status": "Active"
+  },
+  {
+    "title": "Junior Data Engineer",
+    "company": "Africa Data Labs",
+    "location": "Nairobi, Kenya",
+    "employmentType": "Full-time",
+    "industry": "Data Engineering",
+    "salaryRange": "$1,600 - $2,200 / month",
+    "description": "Construct scalable ETL data pipelines, maintain data warehouse schemas in PostgreSQL, and support data science teams with clean data models.",
+    "responsibilities": [
+      "Build automated data ingestion pipelines using Python and SQL",
+      "Optimize data warehouse tables and views in PostgreSQL / Snowflake",
+      "Containerize data scripts using Docker and schedule via Apache Airflow",
+      "Ensure data accuracy, lineage tracking, and schema validation"
+    ],
+    "qualifications": [
+      "BSc in IT, Computer Science, Data Science, or Software Engineering",
+      "1-2 years experience in SQL scripting and Python data processing",
+      "Familiarity with PostgreSQL, Pandas, and Docker"
+    ],
+    "requiredSkills": ["SQL", "Python", "PostgreSQL", "Pandas", "Docker"],
+    "preferredSkills": ["MongoDB", "Git"],
+    "educationRequirements": "BSc Information Technology or Data Science",
+    "experienceRequired": 1,
+    "status": "Active"
+  },
+  {
+    "title": "IT Project Coordinator",
+    "company": "Enterprise IT Solutions",
+    "location": "Nairobi, Kenya",
+    "employmentType": "Full-time",
+    "industry": "IT Project Management",
+    "salaryRange": "$1,500 - $2,100 / month",
+    "description": "Coordinate IT software development projects, facilitate Scrum sprints, maintain project timelines, and liaise between developers and stakeholders.",
+    "responsibilities": [
+      "Organize daily sprint standups, sprint reviews, and retrospectives",
+      "Track project deliverables using Jira / Trello boards",
+      "Prepare project status reports for management stakeholders",
+      "Manage project risks, scope changes, and team resource allocation"
+    ],
+    "qualifications": [
+      "BSc in Information Technology, Project Management, or Business IT",
+      "Knowledge of Agile/Scrum methodologies",
+      "Strong leadership, communication, and organizational skills"
+    ],
+    "requiredSkills": ["Agile / Scrum", "Communication", "Teamwork", "Problem Solving"],
+    "preferredSkills": ["REST API", "Git"],
+    "educationRequirements": "BSc Information Technology or Business IT",
+    "experienceRequired": 2,
+    "status": "Active"
+  },
+  {
+    "title": "Frontend Vue.js Developer",
+    "company": "NextGen Software Inc",
+    "location": "Remote",
+    "employmentType": "Full-time",
+    "industry": "Frontend Web Development",
+    "salaryRange": "$1,500 - $2,200 / month",
+    "description": "We are seeking a frontend web developer skilled in Vue.js and JavaScript to build fast, reactive dashboards and SaaS application portals.",
+    "responsibilities": [
+      "Build modular web interfaces using Vue.js (Vue 3 / Pinia)",
+      "Integrate REST and GraphQL APIs into frontend components",
+      "Write clean, maintainable HTML, CSS, and JavaScript code",
+      "Conduct web cross-browser compatibility testing"
+    ],
+    "qualifications": [
+      "BSc in IT, Computer Science, or equivalent software degree",
+      "2+ years experience working with Vue.js, HTML5, and CSS3",
+      "Proficiency with Git, REST APIs, and modern frontend tools"
+    ],
+    "requiredSkills": ["JavaScript", "Vue.js", "HTML", "CSS", "REST API"],
+    "preferredSkills": ["GraphQL", "TypeScript", "Git"],
+    "educationRequirements": "BSc Information Technology or Computer Science",
+    "experienceRequired": 2,
+    "status": "Active"
+  },
+  {
+    "title": "Java Spring Boot Developer",
+    "company": "Innovate Technologies",
+    "location": "Nairobi, Kenya",
+    "employmentType": "Full-time",
+    "industry": "Enterprise Software",
+    "salaryRange": "$1,800 - $2,700 / month",
+    "description": "Develop scalable enterprise banking and financial microservices using Java 17, Spring Boot, Spring Security, and MySQL database.",
+    "responsibilities": [
+      "Design and code microservices using Java and Spring Boot framework",
+      "Implement secure authentication APIs using OAuth2 and JWT",
+      "Write SQL database migrations and optimize Hibernate ORM queries",
+      "Build unit test suites using JUnit and Mockito"
+    ],
+    "qualifications": [
+      "BSc in Computer Science, Information Technology, or Software Engineering",
+      "2-3 years hands-on experience in Java and Spring Boot development",
+      "Solid knowledge of MySQL/PostgreSQL, Git, and Docker"
+    ],
+    "requiredSkills": ["Java", "Spring Boot", "SQL", "MySQL", "REST API"],
+    "preferredSkills": ["Docker", "PostgreSQL", "Git"],
+    "educationRequirements": "BSc Computer Science or Information Technology",
+    "experienceRequired": 2,
+    "status": "Active"
+  },
+  {
+    "title": "Graduate IT Trainee",
+    "company": "Tech Solutions Ltd",
+    "location": "Nairobi, Kenya",
+    "employmentType": "Full-time",
+    "industry": "IT Operations & Software",
+    "salaryRange": "$850 - $1,200 / month",
+    "description": "Comprehensive 12-month IT rotation program covering Software Engineering, Network Support, Database Management, and Systems Administration.",
+    "responsibilities": [
+      "Rotate through software development, networking, and IT support teams",
+      "Assist senior engineers with web bug fixes and system monitoring",
+      "Complete assigned IT certification training modules",
+      "Participate in company technical workshops and team projects"
+    ],
+    "qualifications": [
+      "Recent graduate with BSc in Information Technology or Computer Science",
+      "Foundational skills in programming (Python/Java/JS) and networking",
+      "Eager to learn, proactive problem solver, and strong team player"
+    ],
+    "requiredSkills": ["JavaScript", "Python", "HTML", "CSS", "Problem Solving", "Communication"],
+    "preferredSkills": ["SQL", "Git", "Linux"],
+    "educationRequirements": "BSc Information Technology or Computer Science",
+    "experienceRequired": 0,
+    "status": "Active"
+  },
+  {
+    "title": "Cybersecurity Incident Responder",
+    "company": "Apex Cyber Analytics",
+    "location": "Nairobi, Kenya",
+    "employmentType": "Full-time",
+    "industry": "Cybersecurity",
+    "salaryRange": "$2,200 - $3,000 / month",
+    "description": "Detect, analyze, and mitigate active cybersecurity attacks. Conduct digital forensics analysis on compromised endpoints and network packets.",
+    "responsibilities": [
+      "Investigate security breach alerts and isolate compromised hosts",
+      "Perform digital forensics analysis on memory dumps and disk logs",
+      "Author incident root-cause analysis reports for executive management",
+      "Update security firewall rules and threat signature lists"
+    ],
+    "qualifications": [
+      "BSc in Cybersecurity, Information Assurance, or IT",
+      "2+ years incident response and digital forensics experience",
+      "Certifications: CompTIA Security+, CEH, or GCIH"
+    ],
+    "requiredSkills": ["Cybersecurity", "CompTIA Security+", "Linux", "Penetration Testing", "Problem Solving"],
+    "preferredSkills": ["Python", "Network Administration"],
+    "educationRequirements": "BSc Cybersecurity or Information Technology",
+    "experienceRequired": 2,
+    "status": "Active"
+  },
+  {
+    "title": "AI Conversational Systems Engineer",
+    "company": "DataPulse Systems",
+    "location": "Nairobi, Kenya (Hybrid)",
+    "employmentType": "Full-time",
+    "industry": "Artificial Intelligence",
+    "salaryRange": "$2,000 - $3,000 / month",
+    "description": "Develop AI-powered conversational chatbots, intent classification systems, and natural language understanding models using Python and LLM integrations.",
+    "responsibilities": [
+      "Design dialog flows and intent classifiers using Python and NLP",
+      "Integrate vector databases (Faiss/Chroma) for semantic search retrieval",
+      "Deploy RESTful AI microservices via FastAPI and Docker",
+      "Monitor response quality and user feedback telemetry"
+    ],
+    "qualifications": [
+      "BSc in IT, Computer Science, or Data Science",
+      "2+ years experience building Python NLP applications",
+      "Solid knowledge of FastAPI, Pandas, Scikit-Learn, and Git"
+    ],
+    "requiredSkills": ["Python", "Natural Language Processing", "Machine Learning", "REST API", "Git"],
+    "preferredSkills": ["Scikit-Learn", "Docker", "Pandas"],
+    "educationRequirements": "BSc Computer Science or Information Technology",
+    "experienceRequired": 2,
+    "status": "Active"
+  },
+  {
+    "title": "Systems Security Engineer",
+    "company": "CloudNet Global",
+    "location": "Nairobi, Kenya",
+    "employmentType": "Full-time",
+    "industry": "IT Infrastructure & Security",
+    "salaryRange": "$2,100 - $2,900 / month",
+    "description": "Hardening enterprise cloud infrastructure, implementing zero-trust access policies, managing IAM roles, and securing container workloads.",
+    "responsibilities": [
+      "Implement zero-trust security controls on AWS/Azure cloud environments",
+      "Perform container security scanning for Docker images and K8s manifests",
+      "Configure cloud firewalls, SSL/TLS certificates, and VPN gateways",
+      "Manage vulnerability management and patch deployment schedules"
+    ],
+    "qualifications": [
+      "BSc in IT, Cybersecurity, or Computer Engineering",
+      "3+ years experience in systems security and cloud infrastructure",
+      "Certifications: CompTIA Security+, AWS Certified Security"
+    ],
+    "requiredSkills": ["Cybersecurity", "Amazon Web Services", "Linux", "Docker", "CompTIA Security+"],
+    "preferredSkills": ["Kubernetes", "Python"],
+    "educationRequirements": "BSc Information Technology or Cybersecurity",
+    "experienceRequired": 3,
+    "status": "Active"
+  },
+  {
+    "title": "Full Stack MERN Developer",
+    "company": "NextGen Software Inc",
+    "location": "Remote",
+    "employmentType": "Full-time",
+    "industry": "Software Engineering",
+    "salaryRange": "$2,200 - $3,200 / month",
+    "description": "Experienced developer to build end-to-end applications using MongoDB, Express.js, React, and Node.js (MERN stack).",
+    "responsibilities": [
+      "Design frontend React user interfaces with responsive Tailwind CSS",
+      "Implement secure Express REST APIs with JWT authentication",
+      "Optimize MongoDB database aggregations and indexed schemas",
+      "Automate application testing and deployment workflows"
+    ],
+    "qualifications": [
+      "BSc in IT, Computer Science, or Software Engineering",
+      "3+ years experience with MongoDB, Express, React, and Node.js",
+      "Solid knowledge of TypeScript, Git, and Docker"
+    ],
+    "requiredSkills": ["JavaScript", "React", "Node.js", "MongoDB", "REST API"],
+    "preferredSkills": ["TypeScript", "Docker", "Git"],
+    "educationRequirements": "BSc Information Technology or Computer Science",
+    "experienceRequired": 3,
+    "status": "Active"
+  },
+  {
+    "title": "Senior Data Scientist",
+    "company": "Africa Data Labs",
+    "location": "Nairobi, Kenya",
+    "employmentType": "Full-time",
+    "industry": "Data Science & AI",
+    "salaryRange": "$3,000 - $4,200 / month",
+    "description": "Lead data science projects in predictive modeling, recommendation engines, fraud detection, and customer segmentation for enterprise clients.",
+    "responsibilities": [
+      "Design, train, and evaluate machine learning models using Python",
+      "Deploy ML models into production as REST APIs using Docker and FastAPI",
+      "Mentor junior data analysts and data science interns",
+      "Communicate analytical model findings to executive stakeholders"
+    ],
+    "qualifications": [
+      "MSc or BSc in Data Science, Statistics, Computer Science, or IT",
+      "4+ years applied experience in Machine Learning and Python",
+      "Deep expertise with Pandas, NumPy, Scikit-Learn, and SQL"
+    ],
+    "requiredSkills": ["Python", "Machine Learning", "Pandas", "Scikit-Learn", "SQL"],
+    "preferredSkills": ["Natural Language Processing", "Deep Learning", "Docker"],
+    "educationRequirements": "BSc/MSc Data Science, Computer Science, or IT",
+    "experienceRequired": 4,
+    "status": "Active"
+  }
+]
