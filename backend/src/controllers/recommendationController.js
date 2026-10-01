@@ -1,11 +1,13 @@
 const User = require('../models/User');
 const Job = require('../models/Job');
 const Recommendation = require('../models/Recommendation');
+const LearningResource = require('../models/LearningResource');
 const {
-  getRecommendationsFromAI,
   getSkillGapFromAI,
   getCareerReadinessFromAI
 } = require('../services/aiClientService');
+const { explainRecommendation } = require('../services/aiProviderService');
+const { calculateRankings, fallbackExplanation } = require('../services/rankingService');
 
 const generateRecommendations = async (req, res) => {
   try {
@@ -28,15 +30,27 @@ const generateRecommendations = async (req, res) => {
       certWeight: 0.05
     };
 
-    const aiResults = await getRecommendationsFromAI(user, jobs, weights);
+    const rankings = calculateRankings(user, jobs, weights);
 
     const fullRecommendations = [];
-    for (const rec of aiResults) {
+    for (const rec of rankings) {
       const matchedJob = jobs.find(j => j._id.toString() === rec.jobId);
       if (matchedJob) {
+        const resources = await LearningResource.find({ skill: { $in: rec.missingSkills } }).limit(5).lean();
+        let explanation = fallbackExplanation(matchedJob, rec, resources);
+        let explanationProvider = 'system-fallback';
+        try {
+          const explained = await explainRecommendation({ profile: user.profile, job: matchedJob, ranking: rec });
+          explanation = explained.explanation;
+          explanationProvider = explained.provider;
+        } catch (error) {
+          console.warn(`[Recommendation Explanation Warning] ${error.message}`);
+        }
         fullRecommendations.push({
           ...rec,
-          job: matchedJob
+          job: matchedJob,
+          explanation,
+          explanationProvider
         });
 
         await Recommendation.create({
@@ -46,7 +60,7 @@ const generateRecommendations = async (req, res) => {
           scores: rec.scores,
           matchingSkills: rec.matchingSkills,
           missingSkills: rec.missingSkills,
-          explanation: rec.explanation,
+          explanation,
           weightsUsed: weights
         }).catch(err => console.error('Recommendation cache write error:', err.message));
       }

@@ -2,8 +2,7 @@ import React, { useState, useContext } from 'react';
 import API from '../../services/api';
 import { AuthContext } from '../../context/AuthContext';
 import Modal from '../../components/common/Modal';
-import { UploadCloud, FileText, CheckCircle2, AlertCircle, ArrowRight, Save, Sparkles } from 'lucide-react';
-import Badge from '../../components/common/Badge';
+import { UploadCloud, FileText, CheckCircle2, AlertCircle, Save, Sparkles } from 'lucide-react';
 
 export default function ResumeUploadPage() {
   const { user, updateUserProfileState } = useContext(AuthContext);
@@ -14,6 +13,7 @@ export default function ResumeUploadPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [savingExtracted, setSavingExtracted] = useState(false);
   const [savedSuccessMsg, setSavedSuccessMsg] = useState('');
+  const [editableProfile, setEditableProfile] = useState(null);
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -46,6 +46,7 @@ export default function ResumeUploadPage() {
 
       if (res.data.success) {
         setParsedResult(res.data.parsedData);
+        setEditableProfile(res.data.parsedData);
         setIsModalOpen(true);
       }
     } catch (err) {
@@ -60,7 +61,7 @@ export default function ResumeUploadPage() {
     setSavingExtracted(true);
     try {
       const currentSkills = user?.profile?.skills || [];
-      const newSkills = parsedResult.extractedSkills || [];
+      const newSkills = editableProfile?.skills || [];
 
       const existingSkillNames = new Set(currentSkills.map(s => s.name.toLowerCase()));
       const combinedSkills = [...currentSkills];
@@ -74,7 +75,13 @@ export default function ResumeUploadPage() {
       const updatedProfile = {
         ...user.profile,
         skills: combinedSkills,
-        education: user?.profile?.education?.length ? user.profile.education : parsedResult.extractedEducation
+        education: user?.profile?.education?.length ? user.profile.education : editableProfile?.education,
+        experience: editableProfile?.experience || user?.profile?.experience || [],
+        certifications: editableProfile?.certifications || user?.profile?.certifications || [],
+        preferences: {
+          ...user?.profile?.preferences,
+          careerInterests: editableProfile?.interests || user?.profile?.preferences?.careerInterests || []
+        }
       };
 
       const res = await API.put('/users/profile', { profile: updatedProfile });
@@ -140,6 +147,18 @@ export default function ResumeUploadPage() {
 
           {file && (
             <div className="flex items-center space-x-2 bg-slate-950 px-4 py-2 rounded-xl border border-slate-800 text-xs text-slate-300 mt-2">
+              {explanation?.learningResources?.length > 0 && (
+                <div>
+                  <span className="text-slate-400 font-semibold block mb-1">Recommended Learning:</span>
+                  <div className="space-y-1">
+                    {explanation.learningResources.map((resource, idx) => (
+                      <a key={idx} href={resource.url || '#'} target="_blank" rel="noreferrer" className="block text-blue-400 hover:text-blue-300">
+                        {resource.title} {resource.provider ? `- ${resource.provider}` : ''}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
               <FileText className="w-4 h-4 text-blue-400" />
               <span className="font-semibold">{file.name}</span>
               <span className="text-slate-500">({(file.size / 1024 / 1024).toFixed(2)} MB)</span>
@@ -171,11 +190,16 @@ export default function ResumeUploadPage() {
           <div>
             <h4 className="font-bold text-slate-200 mb-2 flex items-center space-x-2">
               <Sparkles className="w-4 h-4 text-blue-400" />
-              <span>Detected Technical & Soft Skills ({parsedResult?.extractedSkills?.length || 0})</span>
+              <span>Detected Technical & Soft Skills ({editableProfile?.skills?.length || 0})</span>
             </h4>
             <div className="flex flex-wrap gap-2 p-3 bg-slate-950 rounded-xl border border-slate-800">
-              {parsedResult?.extractedSkills?.map((s, idx) => (
-                <Badge key={idx} text={`${s.name} (${s.category})`} color="blue" />
+              {editableProfile?.skills?.map((s, idx) => (
+                <input
+                  key={idx}
+                  value={s.name}
+                  onChange={(e) => setEditableProfile({ ...editableProfile, skills: editableProfile.skills.map((skill, skillIndex) => skillIndex === idx ? { ...skill, name: e.target.value } : skill) })}
+                  className="w-32 px-2 py-1 bg-slate-900 border border-slate-700 rounded text-slate-200"
+                />
               ))}
             </div>
           </div>
@@ -183,13 +207,59 @@ export default function ResumeUploadPage() {
           <div>
             <h4 className="font-bold text-slate-200 mb-2">Detected Education</h4>
             <div className="p-3 bg-slate-950 rounded-xl border border-slate-800 text-slate-300 space-y-1">
-              {parsedResult?.extractedEducation?.map((edu, idx) => (
+              {editableProfile?.education?.map((edu, idx) => (
                 <div key={idx}>
-                  <strong>{edu.degree}</strong> - {edu.institution} ({edu.graduationYear})
+                  <input
+                    value={edu.degree}
+                    onChange={(e) => setEditableProfile({ ...editableProfile, education: editableProfile.education.map((item, itemIndex) => itemIndex === idx ? { ...item, degree: e.target.value } : item) })}
+                    className="w-48 px-2 py-1 bg-slate-900 border border-slate-700 rounded text-slate-200"
+                  />
+                  <span> - {edu.institution} ({edu.graduationYear || 'year not provided'})</span>
                 </div>
               ))}
             </div>
           </div>
+
+          <label className="block">
+            <span className="font-bold text-slate-200">Name</span>
+            <input
+              value={editableProfile?.name || ''}
+              onChange={(e) => setEditableProfile({ ...editableProfile, name: e.target.value })}
+              className="mt-2 w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded text-slate-200"
+            />
+          </label>
+
+          <div>
+            <h4 className="font-bold text-slate-200 mb-2">Experience</h4>
+            <div className="space-y-2">
+              {editableProfile?.experience?.map((item, idx) => (
+                <input
+                  key={idx}
+                  value={`${item.jobTitle}${item.company ? ` - ${item.company}` : ''}`}
+                  onChange={(e) => setEditableProfile({ ...editableProfile, experience: editableProfile.experience.map((experience, experienceIndex) => experienceIndex === idx ? { ...experience, jobTitle: e.target.value } : experience) })}
+                  className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded text-slate-200"
+                />
+              ))}
+            </div>
+          </div>
+
+          <label className="block">
+            <span className="font-bold text-slate-200">Certifications</span>
+            <input
+              value={(editableProfile?.certifications || []).map(certification => certification.name).join(', ')}
+              onChange={(e) => setEditableProfile({ ...editableProfile, certifications: e.target.value.split(',').map(name => ({ name: name.trim() })).filter(certification => certification.name) })}
+              className="mt-2 w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded text-slate-200"
+            />
+          </label>
+
+          <label className="block">
+            <span className="font-bold text-slate-200">Interests</span>
+            <input
+              value={(editableProfile?.interests || []).join(', ')}
+              onChange={(e) => setEditableProfile({ ...editableProfile, interests: e.target.value.split(',').map(interest => interest.trim()).filter(Boolean) })}
+              className="mt-2 w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded text-slate-200"
+            />
+          </label>
 
           <div className="flex items-center justify-end space-x-3 pt-4 border-t border-slate-800">
             <button

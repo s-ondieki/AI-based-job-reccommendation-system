@@ -3,6 +3,7 @@ const path = require('path');
 const pdfParse = require('pdf-parse');
 const mammoth = require('mammoth');
 const Skill = require('../models/Skill');
+const { extractResumeProfile } = require('./aiProviderService');
 
 const extractTextFromResume = async (filePath) => {
   const ext = path.extname(filePath).toLowerCase();
@@ -89,7 +90,28 @@ const parseSkillsAndProfileFromText = async (rawText) => {
   };
 };
 
+const extractStructuredProfile = async rawText => {
+  try {
+    const result = await extractResumeProfile(rawText);
+    return { ...result.profile, extractionProvider: result.provider, source: 'ai' };
+  } catch (error) {
+    console.warn(`[Resume Extraction Warning] ${error.message}. Using local parser.`);
+    const fallback = await parseSkillsAndProfileFromText(rawText);
+    return {
+      name: '',
+      education: fallback.extractedEducation || [],
+      skills: fallback.extractedSkills || [],
+      experience: fallback.extractedExperience || [],
+      certifications: [],
+      interests: [],
+      extractionProvider: 'local-fallback',
+      source: 'local'
+    };
+  }
+};
+
 module.exports = {
   extractTextFromResume,
-  parseSkillsAndProfileFromText
+  parseSkillsAndProfileFromText,
+  extractStructuredProfile
 };

@@ -111,6 +111,18 @@ export default function JobCard({ recommendation, onSave, isSaved }) {
                 </div>
               </div>
             )}
+              {explanation?.learningResources?.length > 0 && (
+                <div>
+                  <span className="text-slate-400 font-semibold block mb-1">Recommended Learning:</span>
+                  <div className="space-y-1">
+                    {explanation.learningResources.map((resource, idx) => (
+                      <a key={idx} href={resource.url || '#'} target="_blank" rel="noreferrer" className="block text-blue-400 hover:text-blue-300">
+                        {resource.title} {resource.provider ? `- ${resource.provider}` : ''}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
           </div>
         )}
       </div>

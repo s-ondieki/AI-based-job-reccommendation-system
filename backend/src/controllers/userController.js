@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const { extractTextFromResume, parseSkillsAndProfileFromText } = require('../services/resumeService');
+const { extractTextFromResume, extractStructuredProfile } = require('../services/resumeService');
 
 const getProfile = async (req, res) => {
   try {
@@ -45,7 +45,7 @@ const uploadResume = async (req, res) => {
 
     const filePath = req.file.path;
     const rawText = await extractTextFromResume(filePath);
-    const parsedData = await parseSkillsAndProfileFromText(rawText);
+    const parsedData = await extractStructuredProfile(rawText);
 
     const relativeUrl = `/uploads/${req.file.filename}`;
     const user = await User.findById(req.user._id);
@@ -54,7 +54,7 @@ const uploadResume = async (req, res) => {
 
     res.json({
       success: true,
-      message: 'Resume uploaded and processed successfully',
+      message: 'Resume uploaded and processed successfully. Review the extracted profile before saving it.',
       resumeUrl: relativeUrl,
       fileName: req.file.originalname,
       parsedData

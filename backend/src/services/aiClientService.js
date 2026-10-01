@@ -1,9 +1,13 @@
 const axios = require('axios');
 
 const AI_SERVICE_URL = process.env.AI_SERVICE_URL || 'http://127.0.0.1:8000';
+const pythonAIEnabled = process.env.AI_SERVICE_ENABLED === 'true';
 
 const getRecommendationsFromAI = async (userProfile, jobs, weights) => {
   try {
+    if (!pythonAIEnabled) {
+      return fallbackJSRecommendationEngine(userProfile, jobs, weights);
+    }
     const payload = {
       user: {
         education: userProfile.profile?.education || [],
@@ -53,6 +57,7 @@ const getRecommendationsFromAI = async (userProfile, jobs, weights) => {
 
 const getSkillGapFromAI = async (userSkills, jobRequiredSkills, jobPreferredSkills) => {
   try {
+    if (!pythonAIEnabled) throw new Error('Python AI service is disabled');
     const response = await axios.post(`${AI_SERVICE_URL}/skill-gap`, {
       userSkills,
       jobRequiredSkills,
@@ -63,7 +68,7 @@ const getSkillGapFromAI = async (userSkills, jobRequiredSkills, jobPreferredSkil
       return response.data.data;
     }
   } catch (error) {
-    console.warn(`[AI Service Client Warning] Python skill-gap fallback: ${error.message}`);
+    if (pythonAIEnabled) console.warn(`[AI Service Client Warning] Python skill-gap fallback: ${error.message}`);
   }
 
   const uSet = new Set((userSkills || []).map(s => s.toLowerCase()));
@@ -85,6 +90,7 @@ const getSkillGapFromAI = async (userSkills, jobRequiredSkills, jobPreferredSkil
 
 const getCareerReadinessFromAI = async (skillCoverage, experienceMatch, educationMatch, certMatch = 50, interestMatch = 70) => {
   try {
+    if (!pythonAIEnabled) throw new Error('Python AI service is disabled');
     const response = await axios.post(`${AI_SERVICE_URL}/career-readiness`, {
       skillCoverage,
       experienceMatch,
@@ -97,7 +103,7 @@ const getCareerReadinessFromAI = async (skillCoverage, experienceMatch, educatio
       return response.data.data;
     }
   } catch (error) {
-    console.warn(`[AI Service Client Warning] Career readiness fallback: ${error.message}`);
+    if (pythonAIEnabled) console.warn(`[AI Service Client Warning] Career readiness fallback: ${error.message}`);
   }
 
   const score = Math.round(
@@ -125,12 +131,13 @@ const getCareerReadinessFromAI = async (skillCoverage, experienceMatch, educatio
 
 const getEvaluationFromAI = async (testProfiles, testJobs) => {
   try {
+    if (!pythonAIEnabled) throw new Error('Python AI service is disabled');
     const response = await axios.post(`${AI_SERVICE_URL}/evaluate`, { testProfiles, testJobs }, { timeout: 10000 });
     if (response.data && response.data.success) {
       return response.data.evaluation;
     }
   } catch (error) {
-    console.warn(`[AI Service Client Warning] Evaluation endpoint fallback: ${error.message}`);
+    if (pythonAIEnabled) console.warn(`[AI Service Client Warning] Evaluation endpoint fallback: ${error.message}`);
   }
 
   return {
