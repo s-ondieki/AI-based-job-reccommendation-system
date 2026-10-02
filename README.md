@@ -62,7 +62,15 @@ ai-job-recommendation-system/
 - **MongoDB**: Local MongoDB community server running on port `27017` (or MongoDB Atlas connection string)
 
 ### 2. Configure Environment Variables
-Copy `.env.example` to `.env` in `backend/` and `ai-service/` if needed, or rely on defaults.
+Create `backend/.env` from `backend/.env.example` and keep the real file uncommitted. Set the server-side OpenAI settings:
+
+```env
+OPENAI_API_KEY=your-openai-api-key
+OPENAI_ENABLED=true
+OPENAI_MODEL=gpt-4.1-mini
+```
+
+The key belongs only in the backend environment, never in React or frontend environment variables. Gemini and Grok remain available as fallback providers.
 
 ### 3. Backend Setup
 ```bash
@@ -88,6 +96,8 @@ cd frontend
 npm install
 npm run dev      # Starts frontend on http://localhost:5173
 ```
+
+After both servers start, sign in, upload a PDF or DOCX CV, review the extracted fields, and confirm them. The backend then sends the extracted text/profile to OpenAI for structured CV analysis while the existing deterministic matching and readiness algorithms remain in use.
 
 ---
 

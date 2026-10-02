@@ -3,7 +3,9 @@ const cors = require('cors');
 const path = require('path');
 const dotenv = require('dotenv');
 
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, '../.env') });
+
+const { logProviderStatus } = require('./services/aiProviderService');
 
 const connectDB = require('./config/db');
 
@@ -69,6 +71,10 @@ if (process.env.NODE_ENV !== 'test') {
     console.log(`====================================================`);
     console.log(`🚀 Node.js Backend Server running on port ${PORT}`);
     console.log(`📡 Healthcheck: http://localhost:${PORT}/api/health`);
+    logProviderStatus();
+    if (process.env.OPENAI_ENABLED === 'true' && !process.env.OPENAI_API_KEY) {
+      console.warn('[AI Providers] OpenAI is enabled but OPENAI_API_KEY is missing.');
+    }
     console.log(`====================================================`);
   });
 }

@@ -12,7 +12,8 @@ const {
   createLearningResource,
   updateLearningResource,
   deleteLearningResource,
-  getModelAnalytics
+  getModelAnalytics,
+  getAiProviderStatus
 } = require('../controllers/adminController');
 const { protect, adminOnly } = require('../middleware/auth');
 
@@ -33,5 +34,6 @@ router.put('/learning/:id', updateLearningResource);
 router.delete('/learning/:id', deleteLearningResource);
 
 router.get('/analytics', getModelAnalytics);
+router.get('/ai-providers', getAiProviderStatus);
 
 module.exports = router;

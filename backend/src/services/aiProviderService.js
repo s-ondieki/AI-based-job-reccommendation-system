@@ -2,41 +2,63 @@ const axios = require('axios');
 
 const DEFAULT_TIMEOUT_MS = 12000;
 const extractionSchema = {
-  name: '',
-  education: [],
-  skills: [],
-  experience: [],
-  certifications: [],
-  interests: []
+  candidate: {
+    name: null,
+    email: null,
+    phone: null,
+    location: null,
+    professionalSummary: null,
+    education: [],
+    experience: [],
+    skills: [],
+    projects: [],
+    certifications: [],
+    languages: []
+  }
 };
 
 const asString = value => typeof value === 'string' ? value.trim() : '';
+const asNullableString = value => {
+  const normalized = asString(value);
+  return normalized || null;
+};
 const asArray = value => Array.isArray(value) ? value : [];
 
 const parseJsonResponse = content => {
   const text = asString(content).replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim();
-  const parsed = JSON.parse(text);
+  let parsed;
+  try {
+    parsed = JSON.parse(text);
+  } catch (error) {
+    throw new Error('Malformed structured AI response');
+  }
   if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
     throw new Error('AI provider returned a non-object JSON response');
   }
   return parsed;
 };
 
-const normalizeExtraction = data => ({
-  name: asString(data.name),
-  education: asArray(data.education).map(item => ({
+const normalizeExtraction = data => {
+  const candidate = data?.candidate && typeof data.candidate === 'object' ? data.candidate : data || {};
+  const normalized = {
+  name: asNullableString(candidate.name),
+  email: asNullableString(candidate.email),
+  phone: asNullableString(candidate.phone),
+  location: asNullableString(candidate.location),
+  professionalSummary: asNullableString(candidate.professionalSummary),
+  education: asArray(candidate.education).map(item => ({
     institution: asString(item?.institution),
     degree: asString(item?.degree),
     fieldOfStudy: asString(item?.fieldOfStudy),
     graduationYear: Number.isInteger(item?.graduationYear) ? item.graduationYear : undefined
   })).filter(item => item.institution || item.degree || item.fieldOfStudy),
-  skills: asArray(data.skills).map(item => ({
+  skills: asArray(candidate.skills).map(item => ({
     name: asString(typeof item === 'string' ? item : item?.name),
     category: asString(item?.category) || 'General',
     proficiency: ['Beginner', 'Intermediate', 'Advanced', 'Expert'].includes(item?.proficiency) ? item.proficiency : null,
     yearsOfExperience: Number.isFinite(item?.yearsOfExperience) ? Math.max(0, item.yearsOfExperience) : null
   })).filter(item => item.name),
-  experience: asArray(data.experience).map(item => ({
+  experience: asArray(candidate.experience).map(item => ({
     jobTitle: asString(item?.jobTitle),
     company: asString(item?.company),
     description: asString(item?.description),
@@ -44,15 +66,48 @@ const normalizeExtraction = data => ({
     endDate: asString(item?.endDate),
     isCurrent: item?.isCurrent === true,
     skillsUsed: asArray(item?.skillsUsed).map(asString).filter(Boolean),
-    years: Number.isFinite(item?.years) ? Math.max(0, item.years) : 0
+    years: Number.isFinite(item?.years) ? Math.max(0, item.years) : null
   })).filter(item => item.jobTitle || item.company || item.description),
-  certifications: asArray(data.certifications).map(item => ({
+  projects: asArray(candidate.projects).map(item => ({
+    name: asNullableString(typeof item === 'string' ? item : item?.name),
+    description: asNullableString(item?.description),
+    technologies: asArray(item?.technologies).map(asString).filter(Boolean),
+    url: asNullableString(item?.url)
+  })).filter(item => item.name || item.description),
+  certifications: asArray(candidate.certifications).map(item => ({
     name: asString(typeof item === 'string' ? item : item?.name),
     issuingOrganization: asString(item?.issuingOrganization),
     date: asString(item?.date)
   })).filter(item => item.name),
-  interests: asArray(data.interests).map(asString).filter(Boolean)
+  interests: asArray(candidate.interests).map(asString).filter(Boolean),
+  languages: asArray(candidate.languages).map(asString).filter(Boolean)
+  };
+  return normalized;
+};
+
+const getProviderStatus = () => ({
+  openai: {
+    configured: Boolean(process.env.OPENAI_API_KEY),
+    enabled: process.env.OPENAI_ENABLED === 'true',
+    model: process.env.OPENAI_MODEL || 'gpt-4.1-mini'
+  },
+  gemini: {
+    configured: Boolean(process.env.GEMINI_API_KEY),
+    model: process.env.GEMINI_MODEL || 'gemini-1.5-flash'
+  },
+  grok: {
+    configured: Boolean(process.env.GROK_API_KEY),
+    model: process.env.GROK_MODEL || 'grok-3-mini'
+  }
 });
+
+const logProviderStatus = () => {
+  const status = getProviderStatus();
+  console.log('[AI Providers]');
+  console.log(`- OpenAI: ${status.openai.configured && status.openai.enabled ? 'configured' : status.openai.enabled ? 'enabled but API key missing' : 'not configured'}`);
+  console.log(`- Gemini: ${status.gemini.configured ? 'configured' : 'not configured'}`);
+  console.log(`- Grok: ${status.grok.configured ? 'configured' : 'not configured'}`);
+};
 
 const requestGemini = async prompt => {
   const key = process.env.GEMINI_API_KEY;
@@ -86,21 +141,29 @@ const requestGrok = async prompt => {
 
 const requestOpenAI = async prompt => {
   const key = process.env.OPENAI_API_KEY;
-  if (process.env.OPENAI_ENABLED !== 'true' || !key) {
-    throw new Error('OpenAI provider is not configured');
-  }
+  if (process.env.OPENAI_ENABLED !== 'true') throw new Error('OpenAI provider is disabled (set OPENAI_ENABLED=true)');
+  if (!key) throw new Error('OpenAI API key is missing (set OPENAI_API_KEY)');
 
-  const response = await axios.post('https://api.openai.com/v1/responses', {
+  let response;
+  try {
+    response = await axios.post('https://api.openai.com/v1/responses', {
     model: process.env.OPENAI_MODEL || 'gpt-4.1-mini',
     input: [
       { role: 'system', content: 'Return only valid JSON. Use only facts present in the supplied data. Never invent missing candidate information.' },
       { role: 'user', content: prompt }
     ],
     text: { format: { type: 'json_object' } }
-  }, {
-    headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
-    timeout: Number(process.env.AI_PROVIDER_TIMEOUT_MS) || DEFAULT_TIMEOUT_MS
-  });
+    }, {
+      headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+      timeout: Number(process.env.AI_PROVIDER_TIMEOUT_MS) || DEFAULT_TIMEOUT_MS
+    });
+  } catch (error) {
+    const status = error.response?.status;
+    if (error.code === 'ECONNABORTED' || error.code === 'ETIMEDOUT') throw new Error('OpenAI request timed out');
+    if (status === 401) throw new Error('OpenAI API key was rejected');
+    if (status === 429) throw new Error('OpenAI rate limit reached');
+    throw new Error(`OpenAI API request failed${status ? ` with status ${status}` : ''}`);
+  }
 
   const outputText = response.data?.output_text;
   if (outputText) return outputText;
@@ -131,9 +194,10 @@ const requestWithFallback = async prompt => {
 };
 
 const extractResumeProfile = async rawText => {
-  const prompt = `Extract only facts explicitly present in the resume text below. Never infer, guess, or add placeholders. Return exactly one JSON object with these keys: name (string), education (array of {institution, degree, fieldOfStudy, graduationYear}), skills (array of {name, category, proficiency, yearsOfExperience}), experience (array of {jobTitle, company, description, startDate, endDate, isCurrent, skillsUsed, years}), certifications (array of {name, issuingOrganization, date}), interests (array of strings). Use empty strings, empty arrays, or null-like omitted values when the source does not provide a fact. Do not include markdown or extra keys.\n\nRESUME TEXT:\n${rawText}`;
+  const prompt = `Extract only facts explicitly present in the resume text below. Never infer, guess, or add placeholders. Return exactly one JSON object matching this shape: ${JSON.stringify(extractionSchema)}. Use null for missing scalar values and empty arrays for missing collections. Do not include markdown or extra keys.\n\nRESUME TEXT:\n${rawText}`;
   const result = await requestWithFallback(prompt);
-  return { provider: result.provider, profile: normalizeExtraction(parseJsonResponse(result.content)) };
+  const profile = normalizeExtraction(parseJsonResponse(result.content));
+  return { provider: result.provider, profile: { ...profile, candidate: profile } };
 };
 
 const explainRecommendation = async ({ profile, job, ranking }) => {
@@ -202,6 +266,8 @@ module.exports = {
   extractionSchema,
   normalizeExtraction,
   normalizeCvAnalysis,
+  getProviderStatus,
+  logProviderStatus,
   extractResumeProfile,
   analyzeCvProfile,
   explainRecommendation,

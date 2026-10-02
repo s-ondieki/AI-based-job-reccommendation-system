@@ -5,6 +5,11 @@ const LearningResource = require('../models/LearningResource');
 const Recommendation = require('../models/Recommendation');
 const Application = require('../models/Application');
 const { getEvaluationFromAI } = require('../services/aiClientService');
+const { getProviderStatus } = require('../services/aiProviderService');
+
+const getAiProviderStatus = (req, res) => {
+  res.json({ success: true, providers: getProviderStatus() });
+};
 
 const getStatistics = async (req, res) => {
   try {
@@ -190,5 +195,6 @@ module.exports = {
   createLearningResource,
   updateLearningResource,
   deleteLearningResource,
-  getModelAnalytics
+  getModelAnalytics,
+  getAiProviderStatus
 };
