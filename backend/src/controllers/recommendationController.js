@@ -123,7 +123,7 @@ const getCareerReadiness = async (req, res) => {
     });
 
     const skillCoverage = totalReq > 0 ? (totalMatch / totalReq) * 100 : 70;
-    const totalExpYears = (user.profile?.experience || []).reduce((acc, curr) => acc + (curr.years || 1), 0);
+    const totalExpYears = (user.profile?.experience || []).reduce((acc, curr) => acc + (curr.years || 0), 0);
     const expMatch = totalExpYears >= 2 ? 100 : totalExpYears * 40;
     const eduMatch = (user.profile?.education || []).length > 0 ? 85 : 50;
     const certMatch = (user.profile?.certifications || []).length > 0 ? 90 : 40;

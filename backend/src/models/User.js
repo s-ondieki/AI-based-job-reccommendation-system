@@ -30,7 +30,7 @@ const UserSchema = new mongoose.Schema(
           name: { type: String, required: true },
           category: { type: String, default: 'General' },
           proficiency: { type: String, enum: ['Beginner', 'Intermediate', 'Advanced', 'Expert'], default: 'Intermediate' },
-          yearsOfExperience: { type: Number, default: 1 }
+          yearsOfExperience: { type: Number, default: 0 }
         }
       ],
       experience: [
@@ -42,7 +42,7 @@ const UserSchema = new mongoose.Schema(
           endDate: { type: String, default: '' },
           isCurrent: { type: Boolean, default: false },
           skillsUsed: [{ type: String }],
-          years: { type: Number, default: 1 }
+          years: { type: Number, default: 0 }
         }
       ],
       certifications: [

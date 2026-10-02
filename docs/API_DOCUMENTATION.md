@@ -59,7 +59,10 @@ Update user profile.
 
 ### `POST /api/users/resume`
 Upload resume PDF/DOCX (`multipart/form-data` with `resume` field).
-Extracts text and auto-detects skills, education, and experience.
+Extracts text and returns a structured profile for review. The response includes `stage: "extraction_complete"`; it does not claim that comprehensive analysis has run. Empty or unreadable documents return `422`.
+
+### `POST /api/users/cv-analysis`
+Analyze the confirmed profile after the user reviews and saves extracted fields. Returns structured CV quality findings, career role suggestions, deterministic skill gaps with LLM context, and learning recommendations. This endpoint requires the configured server-side AI provider.
 
 ---
 

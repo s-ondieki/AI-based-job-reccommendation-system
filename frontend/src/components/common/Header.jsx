@@ -17,7 +17,6 @@ export default function Header() {
             JobMatch AI
           </span>
           <span className="ml-2 text-xs font-medium px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">
-            BIT Final Year Project
           </span>
         </div>
       </div>

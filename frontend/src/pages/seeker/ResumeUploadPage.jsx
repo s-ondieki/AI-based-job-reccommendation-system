@@ -14,6 +14,8 @@ export default function ResumeUploadPage() {
   const [savingExtracted, setSavingExtracted] = useState(false);
   const [savedSuccessMsg, setSavedSuccessMsg] = useState('');
   const [editableProfile, setEditableProfile] = useState(null);
+  const [analysis, setAnalysis] = useState(null);
+  const [analyzing, setAnalyzing] = useState(false);
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -22,6 +24,11 @@ export default function ResumeUploadPage() {
       const ext = selected.name.substring(selected.name.lastIndexOf('.')).toLowerCase();
       if (!validTypes.includes(ext)) {
         setError('Invalid file format. Please upload a PDF or DOCX file.');
+        setFile(null);
+        return;
+      }
+      if (selected.size > 10 * 1024 * 1024) {
+        setError('The resume must be 10 MB or smaller.');
         setFile(null);
         return;
       }
@@ -45,9 +52,13 @@ export default function ResumeUploadPage() {
       });
 
       if (res.data.success) {
-        setParsedResult(res.data.parsedData);
-        setEditableProfile(res.data.parsedData);
-        setIsModalOpen(true);
+        if (res.data.parsedData) {
+          setParsedResult(res.data.parsedData);
+          setEditableProfile(res.data.parsedData);
+          setIsModalOpen(true);
+        } else {
+          setError('Resume text was extracted, but no structured profile was returned.');
+        }
       }
     } catch (err) {
       setError(err.response?.data?.message || 'Error processing resume file.');
@@ -84,11 +95,26 @@ export default function ResumeUploadPage() {
         }
       };
 
-      const res = await API.put('/users/profile', { profile: updatedProfile });
+      const res = await API.put('/users/profile', {
+        name: editableProfile?.name || undefined,
+        profile: updatedProfile
+      });
       if (res.data.success) {
         updateUserProfileState(res.data.user);
         setIsModalOpen(false);
-        setSavedSuccessMsg('Extracted skills and qualifications merged into your profile successfully!');
+        setSavedSuccessMsg('Profile confirmed. Starting comprehensive CV analysis...');
+        setAnalyzing(true);
+        try {
+          const analysisResponse = await API.post('/users/cv-analysis');
+          if (analysisResponse.data.success) {
+            setAnalysis(analysisResponse.data.analysis);
+            setSavedSuccessMsg('Profile confirmed and CV analysis completed.');
+          }
+        } catch (analysisError) {
+          setError(analysisError.response?.data?.message || 'Profile saved, but CV analysis could not be completed.');
+        } finally {
+          setAnalyzing(false);
+        }
       }
     } catch (err) {
       setError('Failed to apply extracted skills to profile.');
@@ -147,18 +173,6 @@ export default function ResumeUploadPage() {
 
           {file && (
             <div className="flex items-center space-x-2 bg-slate-950 px-4 py-2 rounded-xl border border-slate-800 text-xs text-slate-300 mt-2">
-              {explanation?.learningResources?.length > 0 && (
-                <div>
-                  <span className="text-slate-400 font-semibold block mb-1">Recommended Learning:</span>
-                  <div className="space-y-1">
-                    {explanation.learningResources.map((resource, idx) => (
-                      <a key={idx} href={resource.url || '#'} target="_blank" rel="noreferrer" className="block text-blue-400 hover:text-blue-300">
-                        {resource.title} {resource.provider ? `- ${resource.provider}` : ''}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              )}
               <FileText className="w-4 h-4 text-blue-400" />
               <span className="font-semibold">{file.name}</span>
               <span className="text-slate-500">({(file.size / 1024 / 1024).toFixed(2)} MB)</span>
@@ -170,7 +184,7 @@ export default function ResumeUploadPage() {
             disabled={!file || uploading}
             className="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded-xl transition shadow-lg shadow-blue-600/30 disabled:opacity-40 flex items-center space-x-2 mt-4"
           >
-            <span>{uploading ? 'Parsing Resume Text...' : 'Upload & Extract'}</span>
+            <span>{uploading ? 'Extracting resume text...' : 'Upload & Extract'}</span>
             <Sparkles className="w-4 h-4" />
           </button>
         </form>
@@ -184,7 +198,7 @@ export default function ResumeUploadPage() {
       >
         <div className="space-y-6 text-xs">
           <p className="text-slate-300">
-            Below are the skills and background details detected by our resume parser. You can review and approve them before adding them to your verified profile.
+            These details were extracted and structured from your resume. Review and correct them before confirming; comprehensive CV analysis has not run yet.
           </p>
 
           <div>
@@ -279,6 +293,41 @@ export default function ResumeUploadPage() {
           </div>
         </div>
       </Modal>
+
+      {analyzing && (
+        <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-300 text-xs font-semibold">
+          The confirmed profile is being analyzed for CV quality, career roles, skill gaps, and learning recommendations.
+        </div>
+      )}
+
+      {analysis && (
+        <section className="bg-slate-900 border border-slate-800 rounded-3xl p-6 space-y-5">
+          <div>
+            <h2 className="text-lg font-bold text-slate-100">CV Analysis Results</h2>
+            <p className="text-xs text-slate-400 mt-1">These findings are based on your confirmed profile and existing job requirements.</p>
+          </div>
+          <div className="grid gap-5 md:grid-cols-2 text-xs">
+            <div>
+              <h3 className="font-bold text-slate-200 mb-2">Strengths</h3>
+              <ul className="space-y-1 text-slate-400 list-disc list-inside">
+                {analysis.cvQuality?.strengths?.map(item => <li key={item}>{item}</li>)}
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-bold text-slate-200 mb-2">Priority Skill Gaps</h3>
+              <ul className="space-y-1 text-slate-400 list-disc list-inside">
+                {analysis.skillGaps?.missingSkills?.map(item => <li key={item.skill}>{item.skill}</li>)}
+              </ul>
+            </div>
+          </div>
+          <div>
+            <h3 className="font-bold text-slate-200 mb-2">Suggested Career Roles</h3>
+            <div className="flex flex-wrap gap-2">
+              {analysis.careerRoles?.map(role => <span key={role.title} className="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-300">{role.title}</span>)}
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   );
 }

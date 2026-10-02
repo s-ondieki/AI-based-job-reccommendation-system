@@ -73,7 +73,7 @@ def calculate_recommendation_score(user_data: Dict[str, Any], job_data: Dict[str
 
     user_total_exp = user_data.get("totalExperienceYears", 0.0)
     if not user_total_exp and user_data.get("experience"):
-        user_total_exp = sum([e.get("years", 1.0) for e in user_data.get("experience", [])])
+        user_total_exp = sum([e.get("years", 0.0) for e in user_data.get("experience", [])])
     
     exp_score = compute_experience_match(user_total_exp, job_data.get("experienceRequired", 0.0))
 

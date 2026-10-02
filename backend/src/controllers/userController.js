@@ -1,5 +1,7 @@
 const User = require('../models/User');
 const { extractTextFromResume, extractStructuredProfile } = require('../services/resumeService');
+const { analyzeConfirmedCv } = require('../services/cvAnalysisService');
+const Job = require('../models/Job');
 
 const getProfile = async (req, res) => {
   try {
@@ -55,17 +57,43 @@ const uploadResume = async (req, res) => {
     res.json({
       success: true,
       message: 'Resume uploaded and processed successfully. Review the extracted profile before saving it.',
+      stage: 'extraction_complete',
       resumeUrl: relativeUrl,
       fileName: req.file.originalname,
       parsedData
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: 'Error processing resume file', error: error.message });
+    const status = error.message.includes('meaningful text') ? 422 : 502;
+    res.status(status).json({
+      success: false,
+      stage: 'extraction_failed',
+      message: error.message || 'Error processing resume file'
+    });
+  }
+};
+
+const analyzeCv = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select('-password');
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    const jobs = await Job.find({ status: 'Active' }).select('requiredSkills preferredSkills').lean();
+    const result = await analyzeConfirmedCv({ profile: user.profile, jobs });
+    res.json({ success: true, stage: 'analysis_complete', ...result });
+  } catch (error) {
+    res.status(502).json({
+      success: false,
+      stage: 'analysis_failed',
+      message: 'CV analysis could not be completed. Your confirmed profile was not changed.'
+    });
   }
 };
 
 module.exports = {
   getProfile,
   updateProfile,
-  uploadResume
+  uploadResume,
+  analyzeCv
 };

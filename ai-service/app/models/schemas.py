@@ -10,15 +10,15 @@ class EducationItem(BaseModel):
 class SkillItem(BaseModel):
     name: str
     category: Optional[str] = "General"
-    proficiency: Optional[str] = "Intermediate"
-    yearsOfExperience: Optional[float] = 1.0
+    proficiency: Optional[str] = None
+    yearsOfExperience: Optional[float] = 0.0
 
 class ExperienceItem(BaseModel):
     jobTitle: Optional[str] = ""
     company: Optional[str] = ""
     description: Optional[str] = ""
     skillsUsed: Optional[List[str]] = []
-    years: Optional[float] = 1.0
+    years: Optional[float] = 0.0
 
 class UserProfileRequest(BaseModel):
     education: Optional[List[EducationItem]] = []

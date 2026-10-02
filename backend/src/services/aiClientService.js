@@ -18,7 +18,7 @@ const getRecommendationsFromAI = async (userProfile, jobs, weights) => {
         preferredIndustry: userProfile.profile?.preferences?.preferredIndustry || '',
         preferredLocation: userProfile.profile?.preferences?.preferredLocation || '',
         careerInterests: userProfile.profile?.preferences?.careerInterests || [],
-        totalExperienceYears: (userProfile.profile?.experience || []).reduce((acc, curr) => acc + (curr.years || 1), 0)
+        totalExperienceYears: (userProfile.profile?.experience || []).reduce((acc, curr) => acc + (curr.years || 0), 0)
       },
       jobs: jobs.map(j => ({
         id: j._id.toString(),
@@ -158,7 +158,7 @@ const getEvaluationFromAI = async (testProfiles, testJobs) => {
 
 const fallbackJSRecommendationEngine = (userProfile, jobs, weights) => {
   const userSkillNames = (userProfile.profile?.skills || []).map(s => s.name.toLowerCase());
-  const userExpYears = (userProfile.profile?.experience || []).reduce((acc, curr) => acc + (curr.years || 1), 0);
+  const userExpYears = (userProfile.profile?.experience || []).reduce((acc, curr) => acc + (curr.years || 0), 0);
 
   return jobs.map(job => {
     const reqSkills = (job.requiredSkills || []).map(s => s.toLowerCase());

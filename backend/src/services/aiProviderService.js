@@ -33,8 +33,8 @@ const normalizeExtraction = data => ({
   skills: asArray(data.skills).map(item => ({
     name: asString(typeof item === 'string' ? item : item?.name),
     category: asString(item?.category) || 'General',
-    proficiency: ['Beginner', 'Intermediate', 'Advanced', 'Expert'].includes(item?.proficiency) ? item.proficiency : 'Intermediate',
-    yearsOfExperience: Number.isFinite(item?.yearsOfExperience) ? Math.max(0, item.yearsOfExperience) : 0
+    proficiency: ['Beginner', 'Intermediate', 'Advanced', 'Expert'].includes(item?.proficiency) ? item.proficiency : null,
+    yearsOfExperience: Number.isFinite(item?.yearsOfExperience) ? Math.max(0, item.yearsOfExperience) : null
   })).filter(item => item.name),
   experience: asArray(data.experience).map(item => ({
     jobTitle: asString(item?.jobTitle),
@@ -84,8 +84,36 @@ const requestGrok = async prompt => {
   return response.data?.choices?.[0]?.message?.content || '';
 };
 
+const requestOpenAI = async prompt => {
+  const key = process.env.OPENAI_API_KEY;
+  if (process.env.OPENAI_ENABLED !== 'true' || !key) {
+    throw new Error('OpenAI provider is not configured');
+  }
+
+  const response = await axios.post('https://api.openai.com/v1/responses', {
+    model: process.env.OPENAI_MODEL || 'gpt-4.1-mini',
+    input: [
+      { role: 'system', content: 'Return only valid JSON. Use only facts present in the supplied data. Never invent missing candidate information.' },
+      { role: 'user', content: prompt }
+    ],
+    text: { format: { type: 'json_object' } }
+  }, {
+    headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+    timeout: Number(process.env.AI_PROVIDER_TIMEOUT_MS) || DEFAULT_TIMEOUT_MS
+  });
+
+  const outputText = response.data?.output_text;
+  if (outputText) return outputText;
+
+  return response.data?.output
+    ?.flatMap(item => item.content || [])
+    ?.map(item => item.text || '')
+    ?.join('') || '';
+};
+
 const requestWithFallback = async prompt => {
   const providers = [
+    ['openai', requestOpenAI],
     ['gemini', requestGemini],
     ['grok', requestGrok]
   ];
@@ -112,24 +140,71 @@ const explainRecommendation = async ({ profile, job, ranking }) => {
   const prompt = `Explain this recommendation using only the supplied profile, job, and computed ranking. Do not change the ranking, invent qualifications, or mention facts absent from the inputs. Return exactly JSON with keys summary (string), keyReasons (array of strings), matchingSkills (array of strings), missingSkills (array of strings), learningResources (array of objects with title, provider, skill, url).\n\nPROFILE:\n${JSON.stringify(profile)}\n\nJOB:\n${JSON.stringify(job)}\n\nCOMPUTED RANKING:\n${JSON.stringify(ranking)}`;
   const result = await requestWithFallback(prompt);
   const parsed = parseJsonResponse(result.content);
-  return {
-    provider: result.provider,
-    explanation: {
-      summary: asString(parsed.summary),
-      keyReasons: asArray(parsed.keyReasons).map(asString).filter(Boolean),
-      matchingSkills: asArray(parsed.matchingSkills).map(asString).filter(Boolean),
-      missingSkills: asArray(parsed.missingSkills).map(asString).filter(Boolean),
-      learningResources: asArray(parsed.learningResources).map(item => ({
-        title: asString(item?.title), provider: asString(item?.provider), skill: asString(item?.skill), url: asString(item?.url)
-      })).filter(item => item.title && item.skill)
-    }
-  };
-};
+    return { 
+      provider: result.provider, 
+      explanation: { 
+        summary: asString(parsed.summary), 
+        keyReasons: asArray(parsed.keyReasons).map(asString).filter(Boolean), 
+        matchingSkills: asArray(parsed.matchingSkills).map(asString).filter(Boolean), 
+        missingSkills: asArray(parsed.missingSkills).map(asString).filter(Boolean), 
+        learningResources: asArray(parsed.learningResources).map(item => ({ 
+          title: asString(item?.title), provider: asString(item?.provider), skill: asString(item?.skill), url: asString(item?.url) 
+        })).filter(item => item.title && item.skill) 
+      } 
+    }; 
+  }; 
+
+const normalizeCvAnalysis = data => ({ 
+  candidate: normalizeExtraction(data.candidate || data.profile || {}), 
+  cvQuality: { 
+    strengths: asArray(data.cvQuality?.strengths).map(asString).filter(Boolean), 
+    weaknesses: asArray(data.cvQuality?.weaknesses).map(asString).filter(Boolean), 
+    missingSections: asArray(data.cvQuality?.missingSections).map(asString).filter(Boolean), 
+    grammarAndContentIssues: asArray(data.cvQuality?.grammarAndContentIssues).map(asString).filter(Boolean), 
+    formattingAndAtsIssues: asArray(data.cvQuality?.formattingAndAtsIssues).map(asString).filter(Boolean), 
+    keywordIssues: asArray(data.cvQuality?.keywordIssues).map(asString).filter(Boolean), 
+    vagueDescriptions: asArray(data.cvQuality?.vagueDescriptions).map(asString).filter(Boolean), 
+    measurableAchievementGaps: asArray(data.cvQuality?.measurableAchievementGaps).map(asString).filter(Boolean), 
+    inconsistencies: asArray(data.cvQuality?.inconsistencies).map(asString).filter(Boolean) 
+  }, 
+  careerRoles: asArray(data.careerRoles).map(role => ({ 
+    title: asString(role?.title), 
+    rationale: asString(role?.rationale), 
+    evidence: asArray(role?.evidence).map(asString).filter(Boolean) 
+  })).filter(role => role.title), 
+  skillGaps: { 
+    matchedSkills: asArray(data.skillGaps?.matchedSkills).map(asString).filter(Boolean), 
+    partiallyMatchedSkills: asArray(data.skillGaps?.partiallyMatchedSkills).map(asString).filter(Boolean), 
+    missingSkills: asArray(data.skillGaps?.missingSkills).map(item => ({ 
+      skill: asString(typeof item === 'string' ? item : item?.skill), 
+      priority: asString(item?.priority), 
+      explanation: asString(item?.explanation) 
+    })).filter(item => item.skill) 
+  }, 
+  learningRecommendations: asArray(data.learningRecommendations).map(item => ({ 
+    skill: asString(item?.skill), 
+    topics: asArray(item?.topics).map(asString).filter(Boolean), 
+    tools: asArray(item?.tools).map(asString).filter(Boolean), 
+    technologies: asArray(item?.technologies).map(asString).filter(Boolean), 
+    certifications: asArray(item?.certifications).map(asString).filter(Boolean), 
+    sequence: Number.isInteger(item?.sequence) ? item.sequence : null, 
+    rationale: asString(item?.rationale) 
+  })).filter(item => item.skill) 
+}); 
+
+const analyzeCvProfile = async ({ profile, deterministicSkillGap = null }) => { 
+  const prompt = `Analyze the confirmed candidate profile below. Use only facts present in the profile. Do not infer a degree, employer, title, skill, experience, interest, or certification. Return exactly one JSON object with keys candidate, cvQuality, careerRoles, skillGaps, learningRecommendations. candidate must preserve the supplied structured profile. cvQuality must contain arrays named strengths, weaknesses, missingSections, grammarAndContentIssues, formattingAndAtsIssues, keywordIssues, vagueDescriptions, measurableAchievementGaps, inconsistencies. careerRoles must be an array of {title, rationale, evidence}. skillGaps must contain matchedSkills, partiallyMatchedSkills, and missingSkills, where missingSkills contains {skill, priority, explanation}. learningRecommendations must contain {skill, topics, tools, technologies, certifications, sequence, rationale}. Do not claim that a job or certification is mandatory. The deterministic skill gap, when supplied, is authoritative for mathematical coverage and its skill lists.`; 
+  const result = await requestWithFallback(prompt); 
+  return { provider: result.provider, analysis: normalizeCvAnalysis(parseJsonResponse(result.content)) }; 
+}; 
 
 module.exports = {
   extractionSchema,
   normalizeExtraction,
+  normalizeCvAnalysis,
   extractResumeProfile,
+  analyzeCvProfile,
   explainRecommendation,
-  requestWithFallback
+  requestWithFallback,
+  requestOpenAI
 };
